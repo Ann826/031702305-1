@@ -29,7 +29,7 @@ public class perSon {
 	        int i=0;
 			InputStream is = new FileInputStream("/Users/ann/eclipse-workspace/FindPerson/src/com/Person/Homework1In.txt");
 	        String line; // 用来保存每行读取的内容
-	        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+	        BufferedReader reader = new BufferedReader(new InputStreamReader(is,"UTF-8"));
 	        line = reader.readLine(); // 读取第一行
 	        strArray[i]=line;
 	        i++;
@@ -56,7 +56,7 @@ public class perSon {
 	        String name=str1[0];
 	        
 	        Map m11=new HashMap();
-	        m11.put("\"姓名\"","\""+name+"\"");
+	        m11.put("\r\n"+"\"姓名\"","\""+name+"\"");
 	        str=str.replace(name,"");
 	        str=str.replace(",","");
 	        str=str.replace(".","");
@@ -67,7 +67,7 @@ public class perSon {
 	       	 Telphone=a.group();
 	            str=str.replace(Telphone,"");
 	          }
-	        m11.put("\"手机\"","\""+Telphone+"\"");
+	        m11.put("\r\n"+"\"手机\"","\""+Telphone+"\"");
 	        ArrayList<String>address=new ArrayList<String>();
 	        String province;
 	        String city;
@@ -80,17 +80,17 @@ public class perSon {
 	        Matcher b=Pattern.compile(regex).matcher(str);
 	        while(b.find()) {
 	       	 province=b.group("province");
-	       	 address.add((province==null)?"":"\""+province.trim()+"\"");
+	       	 address.add((province==null)?"":"\r\n"+"\""+province.trim()+"\"");
 	       	 city=b.group("city");
-	       	 address.add((city==null)?"":"\""+city.trim()+"\"");
+	       	 address.add((city==null)?"":"\r\n"+"\""+city.trim()+"\"");
 	       	 county=b.group("county");
-	       	 address.add((county==null)?"":"\""+county.trim()+"\"");
+	       	 address.add((county==null)?"":"\r\n"+"\""+county.trim()+"\"");
 	       	 town=b.group("town");
-	       	 address.add((town==null)?"":"\""+town.trim()+"\"");
+	       	 address.add((town==null)?"":"\r\n"+"\""+town.trim()+"\"");
 	       	 detail=b.group("detail");
-	       	 address.add((detail==null)?"":"\""+detail.trim()+"\"");
+	       	 address.add((detail==null)?"":"\r\n"+"\""+detail.trim()+"\"");
 	        }
-	       	 m11.put("\"地址\"", address);
+	       	 m11.put("\"地址\"","\r\n"+ address);
 	       	 String c11=m11.toString();
 	       	 c11=c11.replace("=",":");
 	       	System.out.println(c11);
