@@ -27,16 +27,16 @@ public class perSon {
 		// TODO Auto-generated method stub
 	       String[] strArray=new String[20000];
 	        int i=0;
-			InputStream is = new FileInputStream("/Users/ann/eclipse-workspace/FindPerson/src/com/Person/Homework1In.txt");
+			InputStream is = new FileInputStream(args[0]);
 	        String line; // 用来保存每行读取的内容
 	        BufferedReader reader = new BufferedReader(new InputStreamReader(is,"UTF-8"));
 	        line = reader.readLine(); // 读取第一行
 	        strArray[i]=line;
 	        i++;
 
-			FileOutputStream os = new FileOutputStream("/Users/ann/eclipse-workspace/FindPerson/src/com/Person/Homework1Out.txt");
+			FileOutputStream os = new FileOutputStream(args[1]);
 	        //String line; // 用来保存每行读取的内容
-	        OutputStreamWriter writer = new OutputStreamWriter(os);
+	        OutputStreamWriter writer = new OutputStreamWriter(os, "UTF-8");
 	        
 	        
 	        while (line != null) { // 如果 line 为空说明读完了
@@ -76,13 +76,24 @@ public class perSon {
 	        String detail;
 	        String detailstreet;
 	        String detailnum;
-	        String regex="(?<province>[^省]+自治区|.*?省|.*?行政区|.*?市)(?<city>[^市]+自治州|.*?地区|.*?行政单位|.+盟|市辖区|.*?市|.*?县)(?<county>[^县]+县|.+区|.+市|.+旗|.+海域|.+岛)?(?<town>[^区]+区|.+镇)?(?<detail>.*)";
+	        String regex="(?<province>[^省]+自治区|.*?省|.*?行政区|)(?<city>[^市]+自治州|.*?地区|.*?行政单位|.+盟|市辖区|.*?市|)(?<county>[^县]+县|.+区|.+市|.+旗|.+海域|.+岛)?(?<town>[^区]+区|.+镇)?(?<detail>.*)";
 	        Matcher b=Pattern.compile(regex).matcher(str);
 	        while(b.find()) {
-	       	 province=b.group("province");
-	       	 address.add((province==null)?"":"\r\n"+"\""+province.trim()+"\"");
-	       	 city=b.group("city");
-	       	 address.add((city==null)?"":"\r\n"+"\""+city.trim()+"\"");
+	         province=b.group("province");
+	         city=b.group("city");
+	        	if(city.equals("北京市")||city.equals("上海市")||city.equals("重庆市")||city.equals("天津市"))
+	        	{
+	        		address.add("\r\n"+"\""+city.trim()+"\"");
+	        		address.add("\r\n"+"\""+city.trim()+"\"");
+	        	}
+	        	else{
+	        		//if(province.equals(""))
+	        		//{
+	        			
+	        		//}
+	        		 address.add((province==null)?"":"\r\n"+"\""+province.trim()+"\"");
+	        		address.add((city==null)?"":"\r\n"+"\""+city.trim()+"\"");
+	        	}
 	       	 county=b.group("county");
 	       	 address.add((county==null)?"":"\r\n"+"\""+county.trim()+"\"");
 	       	 town=b.group("town");
@@ -93,6 +104,7 @@ public class perSon {
 	       	 m11.put("\"地址\"","\r\n"+ address);
 	       	 String c11=m11.toString();
 	       	 c11=c11.replace("=",":");
+	       	 
 	       	System.out.println(c11);
 	         
 		      
